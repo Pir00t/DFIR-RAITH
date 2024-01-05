@@ -11,4 +11,11 @@ Personally, I use this for playing around with rule development and filtering re
 
 ## Usage
 
-The provided Dockerfile can be used to spin up a container with the necessary requirements and based on the code structure being geared towards Jupyter Notebooks, is the recommended method for use.
+The provided Dockerfile can be used to create an image in order to spin up a container with the necessary requirements. This is the recommended method for use given the scripts utilise libraries and functions specific to Jupyter Notebooks for output.
+
+To run the Docker container and interact with the notebook, firstly ensure you are in the **raith/** folder then run:
+
+- docker run -it --rm -p 8888:8888 -v .:/home/analyst/workdir <image-name> (PowerShell)
+- docker run -it --rm -p 8888:8888 -v "${PWD}":/home/analyst/workdir <image-name> (bash) 
+
+This will start the container, mapping the current directory to `/home/analyst/workdir`. Feel free to set Docker CPU limits etc. as I've just provided a basic command to get up and running.
