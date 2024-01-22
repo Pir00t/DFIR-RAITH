@@ -23,6 +23,7 @@ RUN apt-get update -y && DEBIAN_FRONTEND=noninteractive apt-get install -y \
 	libffi-dev \
 	libmagic-dev \
 	p7zip-full && \
+	apt-get upgrade -y && \
 	apt-get clean && rm -rf /var/lib/apt/lists/*
 	 
 # NodeJS setup and install
