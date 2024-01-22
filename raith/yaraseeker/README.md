@@ -1,6 +1,6 @@
 # YaraSeeker
 
-After disliking pouring over results in a terminal window, I decided to make reviewing Yara output a bit more interactive.
+After disliking poring over results in a terminal window, I decided to make reviewing Yara output a bit more interactive.
 
 
 ![Hagrid](seeker.jpg)
