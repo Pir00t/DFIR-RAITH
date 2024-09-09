@@ -1,4 +1,4 @@
-# DFIR-RAITH (Rapid Analysis & Incident Threat Hunt)
+# DFIR-RAITH (Rapid Analysis & Incident Threat Hunting)
 
 **Under semi-active development**
 
