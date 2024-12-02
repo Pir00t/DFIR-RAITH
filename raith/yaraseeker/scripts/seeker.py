@@ -114,18 +114,26 @@ def scan_file(file_path, rules):
 	matches = rules.match(file_path)
 	
 	if matches:
-		for i in range(len(matches)):
-			data = f'File:{file_path}\n'
-			for x in range(len(matches[i].strings)):
-				data += f'Rule:{matches[i].rule}\n'
-				data += f'Identifier:{matches[i].strings[x].identifier}\n'
-				for y in range(len(matches[i].strings[x].instances)):
-					data += f'String:{matches[i].strings[x].instances[y]}\n'
-					data += f'Offset:{matches[i].strings[x].instances[y].offset}\n'
-				
-				yara_matches.append(data)
+		seen = set()  # Track unique combinations
+		for match in matches:
+			for string_match in match.strings:
+				# Create a unique key for this match
+				match_key = (match.rule, string_match.identifier)
+				if match_key not in seen:
+					seen.add(match_key)
+					
+					data = f'File:{file_path}\n'
+					data += f'Rule:{match.rule}\n'
+					data += f'Identifier:{string_match.identifier}\n'
+					
+					# Add all instances for this string match
+					for instance in string_match.instances:
+						data += f'String:{instance}\nOffset:{instance.offset}\n'
+					
+					yara_matches.append(data)
 
 	return yara_matches
+
 
 def match_split(matches):
 	data = []
