@@ -29,7 +29,7 @@ RUN apt-get update -y && DEBIAN_FRONTEND=noninteractive apt-get install -y \
 # NodeJS setup and install
 RUN mkdir -p /etc/apt/keyrings
 RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
-ENV NODE_MAJOR=18
+ENV NODE_MAJOR=20
 RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
 RUN apt-get update -y && apt-get install nodejs -y && apt-get clean && rm -rf /var/lib/apt/lists/*
 
@@ -47,13 +47,13 @@ COPY requirements.txt .
 RUN python3 -m pip install -r requirements.txt
 
 # Fetch and setup tools
-RUN jupyter lab build
+RUN jupyter lab build --dev-build=False --minimize=False
 
 # Final var setup and command to run at start
 RUN chown -R "${A_UID}":"${A_GID}" /home/analyst 
 USER analyst
-ENV HOME="/home/analyst" \
- PATH="$HOME/.local/bin:$PATH"
+ENV HOME="/home/analyst" 
+ENV PATH="$HOME/.local/bin:$PATH"
 WORKDIR /home/analyst/workdir
 EXPOSE 8888
 CMD ["jupyter", "lab" ,"--ip=0.0.0.0" ,"--no-browser"]
